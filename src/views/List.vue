@@ -1,14 +1,18 @@
 <template>
   <div>
     <button class="button" @click="goBack">Back</button>
-    <div class="field">
+    <div class="field has-addons">
       <div class="control">
         <input
           class="input"
           type="text"
           v-model="search"
           placeholder="Seach text"
+          @keyup.enter="searchItems"
         />
+      </div>
+      <div class="control">
+        <button class="button is-info" @click="searchItems">Search</button>
       </div>
     </div>
     <div>
@@ -38,14 +42,21 @@ export default {
     return {
       items: [],
       search: "",
+      actualPage: 1,
     };
   },
   mounted() {
     this.getPagedItems();
   },
   methods: {
+    searchItems() {
+      this.getPagedItems();
+    },
     async getPagedItems() {
-      let respose = await PeopleRepository.getPaged(1, this.search);
+      let respose = await PeopleRepository.getPaged(
+        this.actualPage,
+        this.search
+      );
       if (respose.status === 200) {
         window.console.log(respose.data);
         this.items = respose.data.results;
