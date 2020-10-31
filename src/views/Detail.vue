@@ -1,7 +1,6 @@
 <template>
   <div>
     <button class="button" @click="goBack">Back</button>
-    I'm detail of {{ name }}
   </div>
 </template>
 
@@ -13,13 +12,16 @@ export default {
       type: String,
       required: true,
     },
+    origin: {
+      type: String,
+    },
   },
   data() {
     return {};
   },
   methods: {
     goBack() {
-      this.$router.push({ name: "PeopleList" });
+      this.$router.push({ name: `${this.origin}List` });
     },
   },
 };

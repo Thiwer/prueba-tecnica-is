@@ -3,9 +3,7 @@
     <div class="container">
       <div class="columns">
         <div class="column">
-          <p>
-            <router-link to="/People">People</router-link>
-          </p>
+          <router-link to="/People">People</router-link>
         </div>
         <div class="column">
           <router-link to="/StarShips">StarShips</router-link>

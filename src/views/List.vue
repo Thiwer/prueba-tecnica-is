@@ -63,7 +63,11 @@ export default {
       }
     },
     async loadInfo(item) {
-      this.$router.push({ path: item.name, append: true });
+      this.$router.push({
+        path: item.name,
+        params: { other: "Prueba" },
+        append: true,
+      });
     },
     goBack() {
       this.$router.push("/");
