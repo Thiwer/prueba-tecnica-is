@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="container">
+    <div class="container is-fluid">
       <router-view />
     </div>
   </div>
@@ -17,5 +17,11 @@
 
 .is-pointer {
   cursor: pointer;
+}
+
+.back-button {
+  position: absolute !important;
+  top: 10px;
+  left: 30px;
 }
 </style>

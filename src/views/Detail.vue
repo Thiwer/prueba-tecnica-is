@@ -1,14 +1,42 @@
 <template>
   <div>
-    <button class="button" @click="goBack">Back</button>
+    <button class="button back-button" @click="goBack">Back</button>
+    <div v-if="!isBussy">
+      <h2 class="title is-2 mt-4">{{ name }}</h2>
+      <div class="has-text-left" v-if="item !== undefined">
+        <template v-for="key in itemKeys">
+          <div class="field" :key="key">
+            <label class="label">{{ customName(key) }}</label>
+            <div class="control">
+              <input
+                class="input"
+                type="text"
+                v-model="item[key]"
+                readonly="true"
+              />
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+    <div v-else>
+      <Loading :absolute="true" />
+    </div>
   </div>
 </template>
 
 <script>
+import { RepositoryFactory } from "@/services/api";
+import Loading from "@/components/Loading";
+import { stringFunctions } from "@/helpers/stringHelper.js";
+
 export default {
   name: "detail-view",
+  components: {
+    Loading,
+  },
   props: {
-    name: {
+    id: {
       type: String,
       required: true,
     },
@@ -17,11 +45,39 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      item: undefined,
+      repository: undefined,
+      isBussy: false,
+    };
+  },
+  mounted() {
+    this.repository = RepositoryFactory.get(this.origin.toLowerCase());
+    this.retrieveData();
+  },
+  computed: {
+    itemKeys() {
+      return Object.keys(this.item);
+    },
+    name() {
+      return this.item !== undefined ? this.item.name : "";
+    },
   },
   methods: {
     goBack() {
       this.$router.push({ name: `${this.origin}List` });
+    },
+    async retrieveData() {
+      this.isBussy = true;
+
+      let response = await this.repository.getItem(this.id);
+      if (response.status === 200) {
+        this.item = response.data;
+      }
+      this.isBussy = false;
+    },
+    customName(key) {
+      return stringFunctions.capitalizeFirstLetter(key).replace(/_/g, " ");
     },
   },
 };

@@ -10,6 +10,10 @@ export default {
         }
         let response = await Repository.get(endpoint);
         return response;
+    },
+    async getItem(id) {
+        let endpoint = `${resource}/${id}`;
+        let response = await Repository.get(endpoint);
+        return response;
     }
-
 }
