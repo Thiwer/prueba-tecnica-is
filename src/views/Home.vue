@@ -1,26 +1,18 @@
 <template>
   <div class="home">
-    <div class="container">
-      <div class="columns">
-        <div class="column">
-          <router-link to="/People">People</router-link>
-        </div>
-        <div class="column">
-          <router-link to="/StarShips">StarShips</router-link>
-        </div>
-        <div class="column">
-          <router-link to="/Planets">Planets</router-link>
-        </div>
-      </div>
-    </div>
+    <HomeSection name="People" />
+    <HomeSection name="StarShips" color="success" />
+    <HomeSection name="Planets" color="dark" />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import HomeSection from "@/components/HomeSection";
 
 export default {
   name: "Home",
-  components: {},
+  components: {
+    HomeSection,
+  },
 };
 </script>

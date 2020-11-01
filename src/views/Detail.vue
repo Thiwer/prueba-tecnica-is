@@ -4,19 +4,9 @@
     <div v-if="!isBussy">
       <h2 class="title is-2 mt-4">{{ name }}</h2>
       <div class="has-text-left" v-if="item !== undefined">
-        <template v-for="key in itemKeys">
-          <div class="field" :key="key">
-            <label class="label">{{ customName(key) }}</label>
-            <div class="control">
-              <input
-                class="input"
-                type="text"
-                v-model="item[key]"
-                readonly="true"
-              />
-            </div>
-          </div>
-        </template>
+        <div v-for="key in itemKeys" :key="key">
+          <DetailItem :keyName="key" :item="item" />
+        </div>
       </div>
     </div>
     <div v-else>
@@ -28,12 +18,13 @@
 <script>
 import { RepositoryFactory } from "@/services/api";
 import Loading from "@/components/Loading";
-import { stringFunctions } from "@/helpers/stringHelper.js";
+import DetailItem from "@/components/DetailItem";
 
 export default {
   name: "detail-view",
   components: {
     Loading,
+    DetailItem,
   },
   props: {
     id: {
@@ -75,9 +66,6 @@ export default {
         this.item = response.data;
       }
       this.isBussy = false;
-    },
-    customName(key) {
-      return stringFunctions.capitalizeFirstLetter(key).replace(/_/g, " ");
     },
   },
 };

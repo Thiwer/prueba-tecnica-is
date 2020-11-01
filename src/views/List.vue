@@ -35,9 +35,12 @@
               <td>{{ item.id }}</td>
               <td>{{ item.name }}</td>
             </tr>
+            <tr v-if="numItems === 0">
+              <td class="has-text-centered" :colspan="2">No info to show</td>
+            </tr>
           </tbody>
         </table>
-        <nav class="pagination">
+        <nav class="pagination" v-if="numItems !== 0">
           <a class="pagination-previous" v-if="currentPage > 1" @click="prev()"
             >Previous</a
           >
@@ -127,6 +130,9 @@ export default {
       return stringFunctions.capitalizeFirstLetter(
         this.repositoryName.toLowerCase()
       );
+    },
+    numItems() {
+      return this.items.length;
     },
   },
   methods: {
