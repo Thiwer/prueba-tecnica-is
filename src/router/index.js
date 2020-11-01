@@ -54,6 +54,11 @@ const routes = [
       return route.params;
     }
   },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: () => import("../views/error-pages/NotFound.vue")
+  }
 ]
 
 const router = new VueRouter({

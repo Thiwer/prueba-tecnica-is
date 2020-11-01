@@ -61,9 +61,13 @@ export default {
     async retrieveData() {
       this.isBussy = true;
 
-      let response = await this.repository.getItem(this.id);
-      if (response.status === 200) {
-        this.item = response.data;
+      try {
+        let response = await this.repository.getItem(this.id);
+        if (response.status === 200) {
+          this.item = response.data;
+        }
+      } catch (error) {
+        this.$router.push({ name: "NotFound" });
       }
       this.isBussy = false;
     },
